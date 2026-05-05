@@ -12,11 +12,9 @@ import {
 import useAuth from '../../hooks/useAuth';
 import taskAPI from '../../api/task.api';
 import TaskList from '../../components/task/TaskList';
+import TaskAnalytics from '../../components/dashboard/TaskAnalytics';
 import { toast } from 'react-hot-toast';
 
-/**
- * Dashboard Page — Overview of tasks, statuses, and overdue items
- */
 const Dashboard = () => {
   const { user, isAdmin } = useAuth();
   const [stats, setStats] = useState(null);
@@ -51,7 +49,7 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 size={32} className="animate-spin" style={{ color: 'var(--color-primary)' }} />
+        <Loader2 size={32} className="animate-spin text-indigo-500" />
       </div>
     );
   }
@@ -108,51 +106,69 @@ const Dashboard = () => {
   ];
 
   return (
-    <div>
-      {/* Page Header */}
-      <div className="mb-8">
+    <div className="max-w-7xl mx-auto space-y-12">
+
+      {/* Header */}
+      <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <LayoutDashboard size={28} style={{ color: 'var(--color-primary)' }} />
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+          <LayoutDashboard size={28} className="text-indigo-500" />
+          <h1 className="text-2xl font-bold text-white">
             Dashboard
           </h1>
         </div>
-        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Welcome back, <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{user?.name}</span>!
-          {isAdmin ? ' Here\'s your team overview.' : ' Here are your assigned tasks.'}
+
+        <p className="text-sm text-slate-400">
+          Welcome back,{' '}
+          <span className="font-semibold text-white">{user?.name}</span>!
+          {isAdmin
+            ? " Here's your team overview."
+            : ' Here are your assigned tasks.'}
         </p>
       </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
-        {statCards.map((stat, index) => (
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {statCards.map((stat) => (
           <div
             key={stat.label}
-            className="rounded-xl p-4 transition-all duration-200 hover:scale-105 animate-fade-in"
+            className="rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
             style={{
-              background: stat.bg,
+              background: 'linear-gradient(145deg, rgba(30,41,59,0.7), rgba(15,23,42,0.9))',
               border: `1px solid ${stat.border}`,
-              animationDelay: `${index * 70}ms`,
             }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <stat.icon size={20} style={{ color: stat.color }} />
+            {/* Icon */}
+            <div className="flex items-center justify-between mb-5">
+              <div
+                className="w-11 h-11 rounded-lg flex items-center justify-center"
+                style={{ background: stat.bg }}
+              >
+                <stat.icon size={18} style={{ color: stat.color }} />
+              </div>
             </div>
-            <p className="text-2xl font-bold mb-0.5" style={{ color: stat.color }}>
+
+            {/* Value */}
+            <p
+              className="text-3xl font-bold mb-1"
+              style={{ color: stat.color }}
+            >
               {stat.value}
             </p>
-            <p className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>
+
+            {/* Label */}
+            <p className="text-sm text-slate-400">
               {stat.label}
             </p>
           </div>
         ))}
       </div>
 
-      {/* Recent Tasks */}
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
+      {/* Tasks Section */}
+      <div className="card p-6 mt-4">
+        <h2 className="text-lg font-semibold mb-4 text-white">
           Recent Tasks
         </h2>
+
         <TaskList
           tasks={stats?.recentTasks || []}
           onStatusChange={handleStatusChange}
@@ -160,6 +176,10 @@ const Dashboard = () => {
           emptyMessage="No tasks yet. Create a project and start adding tasks!"
         />
       </div>
+
+      {/* Analytics Section */}
+      <TaskAnalytics stats={stats} />
+
     </div>
   );
 };

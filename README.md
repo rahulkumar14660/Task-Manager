@@ -1,8 +1,8 @@
-# 🚀 Team Task Manager
+# Team Task Manager
 
 A full-stack web application for team task management with role-based access control. Built with the **MERN stack** (MongoDB, Express.js, React, Node.js).
 
-## ✨ Features
+## Features
 
 - **Authentication** — Signup/Login with JWT-based authentication
 - **Role-Based Access Control** — Admin and Member roles with granular permissions
@@ -11,7 +11,7 @@ A full-stack web application for team task management with role-based access con
 - **Dashboard** — Overview of tasks, statuses, and overdue items
 - **Responsive Design** — Works seamlessly on desktop and mobile
 
-## 🔐 Roles & Permissions
+## Roles & Permissions
 
 | Action | Admin | Member |
 |--------|:-----:|:------:|
@@ -22,7 +22,7 @@ A full-stack web application for team task management with role-based access con
 | Update Task Status | ✅ | ✅ |
 | Delete Tasks | ✅ | ❌ |
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
@@ -31,7 +31,7 @@ A full-stack web application for team task management with role-based access con
 | Database | MongoDB (Mongoose ODM) |
 | Authentication | JWT, bcryptjs |
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 team-task-manager/
@@ -59,7 +59,7 @@ team-task-manager/
 └── package.json            # Root monorepo config
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -105,7 +105,7 @@ team-task-manager/
    - Backend runs on: `http://localhost:5000`
    - Frontend runs on: `http://localhost:5173`
 
-## 📡 API Endpoints
+## API Endpoints
 
 ### Authentication
 | Method | Endpoint | Description |
@@ -133,6 +133,6 @@ team-task-manager/
 | DELETE | `/api/tasks/:id` | Delete a task (Admin) |
 | GET | `/api/tasks/dashboard` | Get dashboard statistics |
 
-## 📄 License
+## License
 
 This project is licensed under the ISC License.

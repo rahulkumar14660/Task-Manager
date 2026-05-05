@@ -6,6 +6,7 @@ import Input from '../common/Input';
 /**
  * Modal form for creating a new project
  */
+
 const ProjectForm = ({ onSubmit, onClose }) => {
   const [formData, setFormData] = useState({
     title: '',

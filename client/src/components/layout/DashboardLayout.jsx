@@ -2,24 +2,27 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 
-/**
- * Dashboard layout with Navbar, Sidebar, and main content area
- */
 const DashboardLayout = () => {
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg-primary)' }}>
-      <Navbar />
-      <Sidebar />
+    <div className="bg-[var(--bg-primary)] min-h-screen">
 
-      {/* Main Content Area */}
-      <main
-        className="ml-60 mt-16 p-6 min-h-[calc(100vh-4rem)]"
-        style={{ background: 'var(--bg-primary)' }}
-      >
-        <div className="max-w-7xl mx-auto animate-fade-in">
-          <Outlet />
-        </div>
-      </main>
+      {/* Navbar */}
+      <Navbar />
+
+      {/* Layout */}
+      <div className="flex mt-16">
+
+        {/* Sidebar */}
+        <Sidebar />
+
+        {/* Main Content */}
+        <main className="flex-1 pl-14 pr-10 pt-10 pb-10">
+          <div className="max-w-6xl mx-auto">
+            <Outlet />
+          </div>
+        </main>
+
+      </div>
     </div>
   );
 };

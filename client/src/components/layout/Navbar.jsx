@@ -1,62 +1,41 @@
 import { Link } from 'react-router-dom';
-import { LogOut, User, CheckSquare } from 'lucide-react';
+import { LogOut, CheckSquare } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
-import { getInitials } from '../../utils/helpers';
 
-/**
- * Top navigation bar with user info and logout
- */
 const Navbar = () => {
   const { user, logout, isAdmin } = useAuth();
 
   return (
-    <nav
-      className="fixed top-0 left-0 right-0 z-40 h-16 flex items-center justify-between px-6"
-      style={{
-        background: 'rgba(15, 23, 42, 0.95)',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--border-color)',
-      }}
-    >
-      {/* Logo */}
-      <Link to="/dashboard" className="flex items-center gap-2.5 no-underline">
-        <div
-          className="w-9 h-9 rounded-lg flex items-center justify-center gradient-primary"
-        >
-          <CheckSquare size={20} color="white" />
+    <nav className="h-16 flex items-center justify-between px-10 border-b border-slate-800 bg-[#0f172a]/90 backdrop-blur-md">
+
+      {/* Left */}
+      <Link to="/dashboard" className="flex items-center gap-3">
+        <div className="w-9 h-9 bg-indigo-500 rounded-lg flex items-center justify-center">
+          <CheckSquare size={18} className="text-white" />
         </div>
-        <span
-          className="text-lg font-bold"
-          style={{ color: 'var(--text-primary)' }}
-        >
-          TaskFlow
-        </span>
+        <span className="font-semibold text-lg text-white">TaskFlow</span>
       </Link>
 
-      {/* User Section */}
-      <div className="flex items-center gap-4">
+      {/* Right */}
+      <div className="flex items-center gap-6">
+
         {/* Role Badge */}
-        <span className={`badge ${isAdmin ? 'badge-admin' : 'badge-member'}`}>
-          {user?.role}
+        <span className="px-3 py-1 text-xs rounded-full bg-indigo-500/10 text-indigo-400">
+          {isAdmin ? 'ADMIN' : 'MEMBER'}
         </span>
 
         {/* User Info */}
         <div className="flex items-center gap-3">
-          <div
-            className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold"
-            style={{
-              background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
-              color: 'white',
-            }}
-          >
-            {getInitials(user?.name)}
+          <div className="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white text-sm font-semibold">
+            {user?.name?.charAt(0)?.toUpperCase() || 'U'}
           </div>
-          <div className="hidden sm:block">
-            <p className="text-sm font-medium leading-tight" style={{ color: 'var(--text-primary)' }}>
-              {user?.name}
+
+          <div className="text-sm hidden md:block">
+            <p className="text-white font-medium">
+              {user?.name || 'User'}
             </p>
-            <p className="text-xs leading-tight" style={{ color: 'var(--text-muted)' }}>
-              {user?.email}
+            <p className="text-slate-400 text-xs">
+              {user?.email || 'user@email.com'}
             </p>
           </div>
         </div>
@@ -64,12 +43,12 @@ const Navbar = () => {
         {/* Logout */}
         <button
           onClick={logout}
-          className="btn btn-ghost btn-sm"
-          title="Logout"
+          className="flex items-center gap-2 text-slate-400 hover:text-white transition"
         >
           <LogOut size={18} />
-          <span className="hidden sm:inline">Logout</span>
+          <span className="hidden sm:inline text-sm">Logout</span>
         </button>
+
       </div>
     </nav>
   );

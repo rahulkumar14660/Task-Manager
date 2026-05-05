@@ -275,3 +275,11 @@ body {
   padding: 1rem 2rem;
   font-size: 1rem;
 }
+
+html, body, #root {
+  height: auto;
+}
+
+body {
+  background: radial-gradient(circle at top, #0f172a, #020617);
+}

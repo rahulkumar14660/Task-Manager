@@ -13,16 +13,14 @@ const startServer = async () => {
 
     // Start the server
     const server = app.listen(PORT, () => {
-      console.log('═══════════════════════════════════════════════');
-      console.log(`🚀 Server running in ${NODE_ENV} mode`);
-      console.log(`📡 API available at http://localhost:${PORT}/api`);
-      console.log(`❤️  Health check: http://localhost:${PORT}/api/health`);
-      console.log('═══════════════════════════════════════════════');
+      console.log(`Server running in ${NODE_ENV} mode`);
+      console.log(`API available at http://localhost:${PORT}/api`);
+      console.log(`Health check: http://localhost:${PORT}/api/health`);
     });
 
     // Handle unhandled promise rejections
     process.on('unhandledRejection', (err) => {
-      console.error('❌ Unhandled Promise Rejection:', err.message);
+      console.error('Unhandled Promise Rejection:', err.message);
       server.close(() => {
         process.exit(1);
       });
@@ -30,7 +28,7 @@ const startServer = async () => {
 
     // Handle uncaught exceptions
     process.on('uncaughtException', (err) => {
-      console.error('❌ Uncaught Exception:', err.message);
+      console.error('Uncaught Exception:', err.message);
       server.close(() => {
         process.exit(1);
       });
@@ -38,14 +36,14 @@ const startServer = async () => {
 
     // Graceful shutdown
     process.on('SIGTERM', () => {
-      console.log('📴 SIGTERM received. Shutting down gracefully...');
+      console.log('SIGTERM received. Shutting down gracefully...');
       server.close(() => {
-        console.log('👋 Server closed');
+        console.log('Server closed');
         process.exit(0);
       });
     });
   } catch (error) {
-    console.error('❌ Failed to start server:', error.message);
+    console.error('Failed to start server:', error.message);
     process.exit(1);
   }
 };
