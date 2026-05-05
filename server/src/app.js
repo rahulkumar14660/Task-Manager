@@ -25,11 +25,24 @@ const app = express();
 // CORS (Production-safe)
 app.use(
   cors({
-    origin:
-      env.CLIENT_URL === '*' ? true : env.CLIENT_URL,
+    origin: (origin, callback) => {
+      // Allow requests without origin (Postman, mobile apps)
+      if (!origin) return callback(null, true);
+
+      const allowedOrigins = [
+        env.CLIENT_URL, // from Railway env
+        "http://localhost:5173",
+        "https://task-manager-xi-seven-11.vercel.app",
+        "https://task-manager-axsjcbh7f-rahuls-projects-07270dee.vercel.app"
+      ];
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
 
@@ -53,7 +66,7 @@ app.get('/api/health', (req, res) => {
 
 // ─── API Routes ───────────────────────────────────────────────────────
 
-app.use('/api/auth', authRoutes);
+app.use('/api/auth/login', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/tasks', taskRoutes);
