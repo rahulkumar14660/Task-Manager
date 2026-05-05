@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
 
-/**
- * Project Schema
- * Represents a project containing team members and associated tasks
- */
 const projectSchema = new mongoose.Schema(
   {
     title: {
@@ -33,18 +29,10 @@ const projectSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    toJSON: {
-      transform(doc, ret) {
-        delete ret.__v;
-        return ret;
-      },
-    },
   }
 );
 
-/**
- * Pre-save middleware to ensure the creator is always included in members
- */
+// Ensure creator is in members
 projectSchema.pre('save', function (next) {
   if (this.isNew && this.createdBy) {
     const creatorId = this.createdBy.toString();
@@ -57,9 +45,7 @@ projectSchema.pre('save', function (next) {
   next();
 });
 
-/**
- * Virtual field to get the count of tasks associated with this project
- */
+// Virtual task count
 projectSchema.virtual('taskCount', {
   ref: 'Task',
   localField: '_id',
@@ -67,10 +53,9 @@ projectSchema.virtual('taskCount', {
   count: true,
 });
 
-// Ensure virtuals are included in JSON output
 projectSchema.set('toJSON', { virtuals: true });
 projectSchema.set('toObject', { virtuals: true });
 
-const Project = mongoose.model('Project', projectSchema);
-
-module.exports = Project;
+module.exports =
+  mongoose.models.Project ||
+  mongoose.model('Project', projectSchema);

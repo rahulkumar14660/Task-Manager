@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const {
   createProject,
   getProjects,
@@ -7,29 +8,55 @@ const {
   addMember,
   removeMember,
 } = require('../controllers/project.controller');
+
 const { authenticate } = require('../middlewares/auth.middleware');
 const { authorize } = require('../middlewares/role.middleware');
+const { checkProjectAccess } = require('../middlewares/project.middleware');
+
 const { ROLES } = require('../constants/roles');
 const { validateCreateProject, validateAddMember } = require('../utils/validators');
 
 /**
  * @route   /api/projects
- * Project routes for CRUD and member management
  */
 
-// POST /api/projects — Create a new project (Admin only)
-router.post('/', authenticate, authorize(ROLES.ADMIN), validateCreateProject, createProject);
+// Create Project (Admin only)
+router.post(
+  '/',
+  authenticate,
+  authorize(ROLES.ADMIN),
+  validateCreateProject,
+  createProject
+);
 
-// GET /api/projects — Get all projects for current user
+// Get projects for current user
 router.get('/', authenticate, getProjects);
 
-// GET /api/projects/:id — Get a single project by ID
-router.get('/:id', authenticate, getProjectById);
+// Get single project (Admin OR member)
+router.get(
+  '/:id',
+  authenticate,
+  checkProjectAccess,
+  getProjectById
+);
 
-// POST /api/projects/:id/members — Add a member to project (Admin only)
-router.post('/:id/members', authenticate, authorize(ROLES.ADMIN), validateAddMember, addMember);
+// Add member (Admin only + project access check)
+router.post(
+  '/:id/members',
+  authenticate,
+  authorize(ROLES.ADMIN),
+  checkProjectAccess,
+  validateAddMember,
+  addMember
+);
 
-// DELETE /api/projects/:id/members/:userId — Remove a member (Admin only)
-router.delete('/:id/members/:userId', authenticate, authorize(ROLES.ADMIN), removeMember);
+// Remove member (Admin only + project access check)
+router.delete(
+  '/:id/members/:userId',
+  authenticate,
+  authorize(ROLES.ADMIN),
+  checkProjectAccess,
+  removeMember
+);
 
 module.exports = router;
