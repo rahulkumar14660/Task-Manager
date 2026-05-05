@@ -9,9 +9,22 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  Legend,
 } from 'recharts';
 
 const COLORS = ['#6366f1', '#fbbf24', '#34d399', '#f87171'];
+
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-slate-900/95 backdrop-blur-md p-3 rounded-lg border border-slate-700 shadow-lg">
+        <p className="text-white text-sm font-medium">{payload[0].name}</p>
+        <p className="text-indigo-400 text-sm">{payload[0].value} tasks</p>
+      </div>
+    );
+  }
+  return null;
+};
 
 const TaskAnalytics = ({ stats }) => {
   const pieData = [
@@ -27,11 +40,11 @@ const TaskAnalytics = ({ stats }) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
 
-      {/* Pie Chart */}
-      <div className="card p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">
+      {/* PIE */}
+      <div className="rounded-2xl p-6 border border-slate-700 bg-slate-800/40 backdrop-blur-md shadow-lg">
+        <h3 className="text-base font-semibold text-white mb-5">
           Task Distribution
         </h3>
 
@@ -40,24 +53,26 @@ const TaskAnalytics = ({ stats }) => {
             <PieChart>
               <Pie
                 data={pieData}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
                 dataKey="value"
+                innerRadius={50}
+                outerRadius={80}
+                paddingAngle={3}
               >
                 {pieData.map((_, index) => (
                   <Cell key={index} fill={COLORS[index]} />
                 ))}
               </Pie>
-              <Tooltip />
+
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ fontSize: 12, color: '#94a3b8' }} />
             </PieChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      {/* Bar Chart */}
-      <div className="card p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">
+      {/* BAR */}
+      <div className="rounded-2xl p-6 border border-slate-700 bg-slate-800/40 backdrop-blur-md shadow-lg">
+        <h3 className="text-base font-semibold text-white mb-5">
           Overview
         </h3>
 
@@ -67,8 +82,14 @@ const TaskAnalytics = ({ stats }) => {
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis dataKey="name" stroke="#94a3b8" />
               <YAxis stroke="#94a3b8" />
-              <Tooltip />
-              <Bar dataKey="total" fill="#6366f1" radius={[6, 6, 0, 0]} />
+              <Tooltip content={<CustomTooltip />} />
+
+              <Bar
+                dataKey="total"
+                fill="#6366f1"
+                radius={[8, 8, 0, 0]}
+                animationDuration={800}
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
