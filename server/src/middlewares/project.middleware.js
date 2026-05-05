@@ -1,4 +1,4 @@
-const Project = require('../models/project.model');
+const Project = require('../models/Project.model');
 const { sendError } = require('../utils/responseHandler');
 
 /**

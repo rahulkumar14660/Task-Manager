@@ -22,13 +22,13 @@ const { validateCreateTask, validateUpdateTask } = require('../utils/validators'
  * @route   /api/tasks
  */
 
-// 🔐 Dashboard
+// Dashboard
 router.get('/dashboard', authenticate, getDashboardStats);
 
-// 🔐 My Tasks
+// My Tasks
 router.get('/my', authenticate, getMyTasks);
 
-// 🔐 Create Task (Admin only)
+// Create Task (Admin only)
 router.post(
   '/',
   authenticate,
@@ -37,7 +37,7 @@ router.post(
   createTask
 );
 
-// 🔐 Get tasks by project (Admin OR project members)
+// Get tasks by project (Admin OR project members)
 router.get(
   '/project/:projectId',
   authenticate,
@@ -45,7 +45,7 @@ router.get(
   getTasksByProject
 );
 
-// 🔐 Update task (Admin OR assigned user)
+// Update task (Admin OR assigned user)
 router.put(
   '/:id',
   authenticate,
@@ -54,7 +54,7 @@ router.put(
   updateTask
 );
 
-// 🔐 Delete task (Admin only)
+// Delete task (Admin only)
 router.delete(
   '/:id',
   authenticate,

@@ -1,4 +1,4 @@
-const Task = require('../models/task.model');
+const Task = require('../models/Task.model');
 const { sendError } = require('../utils/responseHandler');
 
 /**
