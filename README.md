@@ -1,138 +1,169 @@
-# Team Task Manager
+# 🚀 Team Task Manager
 
-A full-stack web application for team task management with role-based access control. Built with the **MERN stack** (MongoDB, Express.js, React, Node.js).
+A full-stack **Team Task Management System** built using the **MERN stack**, featuring role-based access control, project collaboration, and real-time task tracking.
 
-## Features
+---
 
-- **Authentication** — Signup/Login with JWT-based authentication
-- **Role-Based Access Control** — Admin and Member roles with granular permissions
-- **Project Management** — Create projects, add/remove team members
-- **Task Management** — Create, assign, and track tasks with status updates
-- **Dashboard** — Overview of tasks, statuses, and overdue items
-- **Responsive Design** — Works seamlessly on desktop and mobile
+## ✨ Features
 
-## Roles & Permissions
+* 🔐 **Authentication** — Secure Signup/Login using JWT
+* 🛡️ **Role-Based Access Control** — Admin & Member permissions
+* 📁 **Project Management** — Create projects, manage team members
+* ✅ **Task Management** — Assign, update, and track tasks
+* 📊 **Dashboard & Analytics** — Task insights and status tracking
+* 📱 **Responsive UI** — Works across all devices
 
-| Action | Admin | Member |
-|--------|:-----:|:------:|
-| Create Project | ✅ | ❌ |
-| Add/Remove Members | ✅ | ❌ |
-| Create & Assign Tasks | ✅ | ❌ |
-| View Assigned Tasks | ✅ | ✅ |
-| Update Task Status | ✅ | ✅ |
-| Delete Tasks | ✅ | ❌ |
+---
 
-## Tech Stack
+## 👥 Roles & Permissions
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18, Vite, Tailwind CSS, React Router v6, Axios |
-| Backend | Node.js, Express.js |
-| Database | MongoDB (Mongoose ODM) |
-| Authentication | JWT, bcryptjs |
+| Action                | Admin | Member |
+| --------------------- | :---: | :----: |
+| Create Project        |   ✅   |    ❌   |
+| Add/Remove Members    |   ✅   |    ❌   |
+| Create & Assign Tasks |   ✅   |    ❌   |
+| View Assigned Tasks   |   ✅   |    ✅   |
+| Update Task Status    |   ✅   |    ✅   |
+| Delete Tasks          |   ✅   |    ❌   |
 
-## Project Structure
+---
+
+## 🛠️ Tech Stack
+
+| Layer    | Technology                |
+| -------- | ------------------------- |
+| Frontend | React, Vite, Tailwind CSS |
+| Backend  | Node.js, Express.js       |
+| Database | MongoDB (Mongoose)        |
+| Auth     | JWT, bcrypt               |
+
+---
+
+## 📂 Project Structure
 
 ```
 team-task-manager/
-├── client/                 # React frontend
+├── client/
 │   ├── src/
-│   │   ├── api/            # API service functions
-│   │   ├── components/     # Reusable UI components
-│   │   ├── context/        # React Context (Auth)
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── pages/          # Page components
-│   │   ├── routes/         # Routing configuration
-│   │   └── utils/          # Helper utilities
+│   ├── components/
+│   ├── pages/
 │   └── ...
-├── server/                 # Express backend
+├── server/
 │   ├── src/
-│   │   ├── config/         # Database & environment config
-│   │   ├── constants/      # App constants & enums
-│   │   ├── controllers/    # Request handlers
-│   │   ├── middlewares/     # Auth, role, error middlewares
-│   │   ├── models/         # Mongoose schemas
-│   │   ├── routes/         # API route definitions
-│   │   ├── services/       # Business logic layer
-│   │   └── utils/          # Helper functions
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── models/
 │   └── ...
-└── package.json            # Root monorepo config
 ```
 
-## Getting Started
+---
 
-### Prerequisites
+## ⚙️ Setup Instructions
 
-- Node.js (v18 or higher)
-- MongoDB (local or Atlas)
-- npm or yarn
+### 1️⃣ Clone Repository
 
-### Installation
+```bash
+git clone <your-repo-url>
+cd team-task-manager
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd team-task-manager
-   ```
+---
 
-2. **Install all dependencies**
-   ```bash
-   npm run install:all
-   ```
+### 2️⃣ Install Dependencies
 
-3. **Configure environment variables**
+```bash
+npm run install:all
+```
 
-   Create `server/.env`:
-   ```env
-   PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/team-task-manager
-   JWT_SECRET=your_super_secret_jwt_key_here
-   JWT_EXPIRE=7d
-   NODE_ENV=development
-   CLIENT_URL=http://localhost:5173
-   ```
+---
 
-   Create `client/.env`:
-   ```env
-   VITE_API_URL=http://localhost:5000/api
-   ```
+### 3️⃣ Setup Environment Variables
 
-4. **Start development servers**
-   ```bash
-   npm run dev
-   ```
+#### 📁 server/.env
 
-   - Backend runs on: `http://localhost:5000`
-   - Frontend runs on: `http://localhost:5173`
+```env
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/team-task-manager
+JWT_SECRET=your_secret_key_here
+JWT_EXPIRE=7d
+NODE_ENV=development
+CLIENT_URL=http://localhost:5173
+```
 
-## API Endpoints
+---
 
-### Authentication
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/signup` | Register a new user |
-| POST | `/api/auth/login` | Login user |
-| GET | `/api/auth/me` | Get current user profile |
+#### 📁 client/.env
 
-### Projects
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/projects` | Create a project (Admin) |
-| GET | `/api/projects` | Get all projects |
-| GET | `/api/projects/:id` | Get project details |
-| POST | `/api/projects/:id/members` | Add member (Admin) |
-| DELETE | `/api/projects/:id/members/:userId` | Remove member (Admin) |
+```env
+VITE_API_URL=http://localhost:5000/api
+```
 
-### Tasks
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/tasks` | Create a task (Admin) |
-| GET | `/api/tasks/project/:projectId` | Get tasks by project |
-| GET | `/api/tasks/my` | Get my assigned tasks |
-| PUT | `/api/tasks/:id` | Update a task |
-| DELETE | `/api/tasks/:id` | Delete a task (Admin) |
-| GET | `/api/tasks/dashboard` | Get dashboard statistics |
+---
 
-## License
+### 4️⃣ Run Application
 
-This project is licensed under the ISC License.
+```bash
+npm run dev
+```
+
+---
+
+## 🌐 Running URLs
+
+* 🔹 Frontend → http://localhost:5173
+* 🔹 Backend → http://localhost:5000/api
+
+---
+
+## 📡 API Endpoints
+
+### 🔐 Authentication
+
+* `POST /api/auth/signup`
+* `POST /api/auth/login`
+* `GET /api/auth/me`
+
+---
+
+### 📁 Projects
+
+* `POST /api/projects`
+* `GET /api/projects`
+* `GET /api/projects/:id`
+* `POST /api/projects/:id/members`
+* `DELETE /api/projects/:id/members/:userId`
+
+---
+
+### ✅ Tasks
+
+* `POST /api/tasks`
+* `GET /api/tasks/project/:projectId`
+* `GET /api/tasks/my`
+* `PUT /api/tasks/:id`
+* `DELETE /api/tasks/:id`
+* `GET /api/tasks/dashboard`
+
+---
+
+## 🔐 Security Features
+
+* JWT Authentication
+* Role-based route protection
+* Project-level access control
+* Task ownership validation
+
+---
+
+## 🚀 Future Improvements
+
+* Notifications system
+* Real-time updates (WebSockets)
+* File attachments
+* Activity logs
+
+---
+
+## 📄 License
+
+Licensed under ISC.
